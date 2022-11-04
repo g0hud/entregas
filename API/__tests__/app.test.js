@@ -24,6 +24,22 @@ describe('CRUD Delivery Success', () => {
     expect(apiResponse.status).toBe(201);
     expect(apiResponse.data).toHaveProperty('_id');
   });
+
+  it('should be able to list all deliveries', async () => {
+    const apiResponse = await api.get('/delivery');
+
+    expect(apiResponse.status).toBe(200);
+    expect(apiResponse.data).toBeInstanceOf(Array);
+  });
+
+  it('should get a delivery by id', async () => {
+    const deliveryList = await api.get('/delivery');
+
+    const apiResponse = await api.get(`/delivery/${deliveryList.data[0]._id}`);
+
+    expect(apiResponse.status).toBe(200);
+    expect(apiResponse.data).toHaveProperty('_id');
+  });
 });
 
 
@@ -39,7 +55,15 @@ describe('CRUD Delivery Fail', () => {
       },
     }
     await api.post('/delivery', bodySubmission ).catch(error => {
-      expect(error.response.status).toBe(400);
+      expect(error.response.status).toBe(500);
+      expect(error.response.data).toHaveProperty('error');
+    });
+  });
+
+  it('should not be able to list all deliveries', async () => {
+    await api.get('/delivery').catch(error => {
+
+      expect(error.response.status).toBe(500);
       expect(error.response.data).toHaveProperty('error');
     });
   });

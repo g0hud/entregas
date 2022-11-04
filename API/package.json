@@ -5,7 +5,8 @@
   "main": "src/server.js",
   "scripts": {
     "test": "jest",
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "dev": "set NODE_ENV=test && nodemon src/server.js"
   },
   "keywords": [],
   "author": "",

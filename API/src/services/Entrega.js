@@ -27,6 +27,28 @@ class Entrega {
       throw new Error("Error in createEntrega: " + error.message);
     }
   }
+
+  async listEntregas() {
+    try {
+      const entregas = await entregaModel.find();
+
+      return entregas;
+    }
+    catch (error) {
+      throw new Error("Error in listEntregas: " + error.message);
+    }
+  }
+
+  async getEntregaById(id) {
+    try {
+      const entrega = await entregaModel.findById(id);
+
+      return entrega;
+    }
+    catch (error) {
+      throw new Error("Error in getEntregaById: " + error.message);
+    }
+  }
 }
 
 module.exports = new Entrega();
