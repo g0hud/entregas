@@ -49,6 +49,46 @@ class Entrega {
       throw new Error("Error in getEntregaById: " + error.message);
     }
   }
+
+  async updateEntrega(bodyOfRequest) {
+    try {
+      const {
+        id,
+        name,
+        deliveryDate,
+        local_description,
+        location_initial,
+        location_final
+      } = bodyOfRequest;
+
+      const entrega = await entregaModel.findByIdAndUpdate(id, {
+        name,
+        deliveryDate,
+        local_description,
+        location_initial,
+        location_final
+      },
+      {
+        new: true
+      });
+
+      return entrega;
+    }
+    catch (error) {
+      throw new Error("Error in updateEntrega: " + error.message);
+    }
+  }
+
+  async deleteEntrega(id) {
+    try {
+      const entrega = await entregaModel.findByIdAndRemove(id);
+
+      return entrega;
+    }
+    catch (error) {
+      throw new Error("Error in deleteEntrega: " + error.message);
+    }
+  }
 }
 
 module.exports = new Entrega();
